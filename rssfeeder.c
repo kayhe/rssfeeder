@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
   bool generateGUID = false;
   int c;
 
-  while ((c = getopt(argc, argv, "act:l:d:g")) != -1)
+  while ((c = getopt(argc, argv, "acht:l:d:g")) != -1)
     switch (c) {
     case 'a':
       // Add item to feed
@@ -49,6 +49,17 @@ int main(int argc, char **argv) {
       // Generate GUID for item
       generateGUID = true;
       break;
+    case 'h':
+    case '?':
+      // Usage
+      printf("Usage:\n");
+      printf("-a Add item to feed\n");
+      printf("-c Create item to feed\n");
+      printf("-t Feed/Item title\n");
+      printf("-l Feed/Item link\n");
+      printf("-d Feed/Item description\n");
+      printf("-g Generate GUID for item\n");
+      return EXIT_SUCCESS;
     default:
       return EXIT_FAILURE;
     }
