@@ -1,13 +1,12 @@
 TARGET ?= rssfeeder
-INC_DIRS ?= /usr/include/libxml2/
-INC_FLAGS := $(addprefix -I,$(INC_DIRS))
-LIBS := -lxml2
+INC_FLAGS := -I/usr/local/include/libxml2
+LIBS := -L/usr/local/lib -lxml2
 SRCS := rssfeeder.c
 
 CFLAGS := -Wall -Wextra #-Werror
 
 $(TARGET): $(SRCS)
-	$(CC) $(INC_FLAGS) $(CFLAGS) -o $@ $< $(LIBS) 
+	$(CC) $(CFLAGS) $(INC_FLAGS) -o $@ $< $(LIBS)
 
 .PHONY: clean format
 clean:
