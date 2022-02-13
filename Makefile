@@ -1,17 +1,29 @@
-TARGET ?= rssfeeder
-INC_DIRS ?= /usr/include/libxml2/
-INC_FLAGS := $(addprefix -I,$(INC_DIRS))
-LIBS := -lxml2
+TARGET := rssfeeder
+
+OS != uname
+
+INCDIRS_Linux := /usr/include/libxml2/
+INCDIRS_FreeBSD := /usr/local/include/libxml2/
+INCDIRS := $(INCDIRS_$(OS))
+INCFLAGS := -I$(INCDIRS) 
+LDLIBS := -lxml2
+LDFLAGS_Linux :=
+LDFLAGS_FreeBSD := -L/usr/local/lib/
+LDFLAGS := $(LDFLAGS_$(OS))
+CFLAGS := -Wall -Wextra -Werror $(INCFLAGS)
+
 SRCS := rssfeeder.c
+OBJS := $(SRCS:.c=.o)
 
-CFLAGS := -Wall -Wextra #-Werror
+all: $(TARGET)
 
-$(TARGET): $(SRCS)
-	$(CC) $(INC_FLAGS) $(CFLAGS) -o $@ $< $(LIBS) 
+$(OBJS): %.o: %.c
+
+$(TARGET): rssfeeder.o
 
 .PHONY: clean format
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) $(OBJS)
 
 format:
 	clang-format -i $(SRCS)
