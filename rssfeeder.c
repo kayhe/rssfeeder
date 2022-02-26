@@ -164,7 +164,7 @@ bool addItem(char *title, char *description, char *link, bool generateGUID) {
   char pubDate[50];
   const time_t t = time(NULL);
   const struct tm dateTime = *localtime(&t);
-  if (strftime(pubDate, sizeof(pubDate), "%a, %d %b %Y %H:%M:%S %Z",
+  if (strftime(pubDate, sizeof(pubDate), "%a, %d %b %Y %H:%M:%S %z",
                &dateTime) == 0) {
     fprintf(stderr, "Can't get current time\n");
     return false;
